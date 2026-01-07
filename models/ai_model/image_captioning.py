@@ -3,9 +3,15 @@ from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
 
 model_path = os.environ.get("BLIP_MODEL_PATH")
+# processor_path = os.environ.get("CONFIG_PATH")
+
+# model_path = "./blip_image_captioning"
 
 processor = BlipProcessor.from_pretrained(model_path, use_fast=True)
 model = BlipForConditionalGeneration.from_pretrained(model_path)
+
+# model = torch.load(model_path, map_location='cpu')
+# model.eval()
 
 try:
     for line in sys.stdin:

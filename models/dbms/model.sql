@@ -1,3 +1,5 @@
+SET TIME ZONE LOCAL;
+
 CREATE SCHEMA IF NOT EXISTS multi_schema;
 
 -- Create custom simple dictionary
@@ -70,9 +72,9 @@ CREATE TABLE IF NOT EXISTS multi_schema."Media"
     media_id serial NOT NULL,
     file_type file_type_enum NOT NULL,
     file_name text COLLATE pg_catalog."default",
-    create_date timestamp without time zone,
-    create_month smallint GENERATED ALWAYS AS (EXTRACT(month FROM create_date)) STORED,
-    create_year smallint GENERATED ALWAYS AS (EXTRACT(year FROM create_date)) STORED,
+    create_date timestamp with time zone,
+    create_month smallint GENERATED ALWAYS AS ((EXTRACT(month FROM (create_date AT TIME ZONE 'America/Los_Angeles'::text)))::smallint) STORED,
+    create_year smallint GENERATED ALWAYS AS ((EXTRACT(year FROM (create_date AT TIME ZONE 'America/Los_Angeles'::text)))::smallint) STORED,
     file_size bigint,
     hash_code character varying(65) COLLATE pg_catalog."default",
     hidden boolean DEFAULT false,
@@ -156,6 +158,7 @@ CREATE TABLE IF NOT EXISTS multi_schema."UserLog"
     user_log_id serial NOT NULL,
     "RegisteredUser" uuid,
     user_agent text COLLATE pg_catalog."default",
+    email character varying(100) COLLATE pg_catalog."default",
     last_url_request character varying(1024) COLLATE pg_catalog."default",
     last_logged_in timestamp without time zone,
     ip_address character varying(100) COLLATE pg_catalog."default" NOT NULL,

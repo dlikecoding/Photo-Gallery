@@ -1,0 +1,1 @@
+import{t as n,i}from"./index-BvSQAnfI.js";var l=n("<header><div inert></div><div class=buttonContainer>");const d=t=>(()=>{var e=l(),r=e.firstChild,a=r.nextSibling;return i(r,()=>t.left),i(a,()=>t.right),e})();export{d as H};
