@@ -62205,7 +62205,7 @@ app.use(csrf({
   origin: Bun.env.ORIGIN_URL
 }));
 app.use(secureHeaders());
-app.basePath("api/v1").route("/auth", auth_default).route("/search", search_default).route("/upload", upload_default).route("/stream", stream_default).route("/user", user_default).route("/medias", medias_default).route("/media", media_default).route("/album", album_default).route("/admin", admin_default);
+app.basePath("api/v1").route("/auth", auth_default).use(isAuthenticate).route("/search", search_default).route("/upload", upload_default).route("/stream", stream_default).route("/user", user_default).route("/medias", medias_default).route("/media", media_default).route("/album", album_default).use(isAdmin).route("/admin", admin_default);
 app.get(`/${getDirName(Bun.env.THUMB_PATH)}/*`, isAuthenticate, thumbnails_default);
 app.on("GET", [`/${getDirName(Bun.env.PHOTO_PATH)}/*`, `/${getDirName(Bun.env.UPLOAD_PATH)}/*`], isAuthenticate, streamLargeVid, serveStatic2({ root: Bun.env.MAIN_PATH }));
 app.get("/assets/*", serveStatic2({ root: "./dist" }));
